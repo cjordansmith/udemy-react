@@ -1,6 +1,7 @@
 // /public/app.jsx
 var Greeter = React.createClass({
 
+  // default properties when none are assigned
   getDefaultProps: function() {
     return {
       name: 'React',
@@ -8,16 +9,36 @@ var Greeter = React.createClass({
     };
   },
 
+  // on page load, assigns name variable to default
+  getInitialState: function() {
+    return {
+      name: this.props.name
+    };
+  },
+
+  // when 'Set Name' button clicked, change displayed name variable
   onButtonClick: function(e) {
     e.preventDefault();
 
-    var name = this.refs.name.value;
+    var nameRef = this.refs.name;
 
-    alert(name);
+    // assigns variable name to input value
+    var name = nameRef.value;
+
+    // when button clicked, remove text from input field
+    nameRef.value = '';
+
+    if (typeof name === 'string' && name.length > 0) {
+      // updates state of name component from input
+      this.setState({
+        name: name
+      });
+    }
+
   },
 
   render: function() {
-    var name = this.props.name;
+    var name = this.state.name;
     var message = this.props.message;
 
     return(
